@@ -1,0 +1,23 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/react/Dockerfile
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/app:cached
+      - node_modules_volume:/app/node_modules
+    ports:
+      - 3000:3000
+    tty: true
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    ports:
+      - 8080:8080
+volumes:
+  node_modules_volume:
